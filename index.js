@@ -1,21 +1,24 @@
 import express from "express";
-import { connect } from './config/db.js'
+import { connect } from "./config/db.js";
 import { userRouter } from "./routes/user.routes.js";
 import { notesRouter } from "./routes/notes.routes.js";
-import cors from 'cors'
+import cors from "cors";
+import "dotenv/config";
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use('/uploads', express.static('uploads'));
+console.log(process.env.PORT);
+
+app.use("/uploads", express.static("uploads"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-connect()
+connect();
 
-app.use(express.static('public'))
-app.use('/',userRouter)
-app.use('/notes', notesRouter)
+app.use(express.static("public"));
+app.use("/", userRouter);
+app.use("/notes", notesRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
